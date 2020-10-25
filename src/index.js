@@ -41,6 +41,7 @@ function showError(error) {
       console.log("No switch case ran.");
   }
   // New York default
+  console.log("fetching...");
   fetchLocationCity("New York");
 }
 
