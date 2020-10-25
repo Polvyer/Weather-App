@@ -40,6 +40,8 @@ function showError(error) {
     default:
       console.log("No switch case ran.");
   }
+  // New York default
+  fetchLocationCity("New York");
 }
 
 // Get location based on coordinates (latitude, longitude)
