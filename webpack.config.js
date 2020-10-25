@@ -3,15 +3,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const PrettierPlugin = require('prettier-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
-  mode: 'development', // helps make output files readable for devs
+  mode: 'production', // helps make output files readable for devs
   entry: {
     app: './src/index.js',
     modules: './src/modules.js',
   },
   devtool: 'inline-source-map', // makes it easier to track down errors and warnings
+  devServer: {
+    contentBase: './dist', // live reload
+  },
   plugins: [
+    new DefinePlugin({
+      'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
+    }),
     new PrettierPlugin(), // run first
     new ESLintPlugin(), // run second
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }), // we don't want to remove the index.html file after the incremental build triggered by watch

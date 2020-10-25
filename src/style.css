@@ -9,12 +9,16 @@
   font-family: "Open Sans";
 }
 
+/* Override Bootstrap */
 #bootstrap-overrides #logo {
   font-size: 25px;
 }
+#bootstrap-overrides #celciusToFahrenheit {
+  color: white;
+}
 
 .background-image {
-  background-image: url("./images/rain.gif");
+  background-image: url("./images/cloudy.gif");
   background-position: 50% 50%;
   width: 100%;
   background-size: cover;
@@ -34,16 +38,41 @@ main * {
   font-size: 20px;
 }
 
+/* Font-size for the data in the middle-text */
+.date {
+  font-size: 16px;
+}
+
 /* Font-size for the temp in middle text */
 .temp {
   font-size: 3rem;
 }
 
+/* Footer children borders */
 footer div {
   border-right: 1px white solid;
   text-align: center;
 }
-
 footer div:last-child {
   border: none;
+}
+
+/* Loader CSS */
+.loader {
+  display: inline;
+  border: 16px solid #ffffff; /* Light grey */
+  border-top: 16px solid #212529; /* Dark */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
