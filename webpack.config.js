@@ -6,7 +6,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 
 module.exports = {
-  mode: 'production', // helps make output files readable for devs
+  mode: 'development', // helps make output files readable for devs
   entry: {
     app: './src/index.js',
     modules: './src/modules.js',
