@@ -49,7 +49,7 @@ function showError(error) {
 async function fetchLocationCoords(coords) {
   try {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${mod.module}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${mod.module}`
     );
     console.log(response);
     const user = await response.json();
@@ -66,7 +66,7 @@ async function fetchLocationCoords(coords) {
 async function fetchLocationCity(city) {
   try {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${mod.module}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${mod.module}`
     );
     console.log(response);
     const user = await response.json();
