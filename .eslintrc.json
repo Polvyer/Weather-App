@@ -15,6 +15,7 @@
     "rules": {
       "import/prefer-default-export": ["off", "always"],
       "no-console": ["off", "always"],
-      "no-use-before-define": ["off", "always"]
+      "no-use-before-define": ["off", "always"],
+      "no-else-return": ["off", "always"]
     }
 }

@@ -2,11 +2,10 @@ import "./style.css";
 import "./fonts/OpenSans-Regular.ttf";
 import Cloud from "./images/cloudy.gif";
 import Rain from "./images/rain.gif";
+import Snow from "./images/snow.gif";
+import Clear from "./images/clear.gif";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { mod } from "./modules";
-
-console.log(Cloud);
-console.log(Rain);
 
 // Check if browser supports geolocation
 function getLocation() {
@@ -100,6 +99,7 @@ function displayLocation(user) {
     user.main.feels_like
   )}°C`;
   pDescription.textContent = `Description: ${user.weather[0].description}`;
+  setBackground(user.weather[0].description);
   currentTemp.textContent = `${temp}°C`;
   lowTemp.textContent = `${kelvinToCelcius(user.main.temp_min)}°C`;
   highTemp.textContent = `${kelvinToCelcius(user.main.temp_max)}°C`;
@@ -178,12 +178,33 @@ function fahrenheitToCelcius(temp) {
   return `${Math.ceil(((temp - 32) * 5) / 9)}°C`;
 }
 
+// Set animated GIF background based on current weather
+function setBackground(txt) {
+  const weather = extractText(txt);
+  main.style.backgroundImage = `url(${weather})`;
+}
+
+// Parse description
+function extractText(txt) {
+  const lowTxt = txt.toLowerCase();
+  if (lowTxt.includes("cloud")) {
+    console.log("cloud");
+    return Cloud;
+  } else if (lowTxt.includes("snow")) {
+    console.log("snow");
+    return Snow;
+  } else if (lowTxt.includes("rain")) {
+    console.log("rain");
+    return Rain;
+  }
+  return Clear;
+}
+
 /* Event listener callbacks */
 // For when the user toggles the custom switch
 function changeTempUnit() {
   updateTemperatures(this.checked);
 }
-
 // For when the user submits a search
 function parseSearch(e) {
   e.preventDefault();
@@ -196,6 +217,7 @@ function parseSearch(e) {
   searchVal.value = "";
 }
 
+const main = document.getElementById("main-div");
 const customSwitch = document.getElementById("customSwitch1");
 const form = document.getElementById("form1");
 const loader = document.querySelector(".loader");
