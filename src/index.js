@@ -1,21 +1,24 @@
 import "./style.css";
+import "./fonts/OpenSans-Regular.ttf";
+import Cloud from "./images/cloudy.gif";
+import Rain from "./images/rain.gif";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const apiKey = "572d281c55a3fb5b4ca4f553f5c5df3f";
+console.log(Cloud);
+console.log(Rain);
 
 // Check if browser supports geolocation
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    element.textContent = "Geolocation is not supported by this browser.";
+    console.log("Geolocation is not supported by this browser.");
   }
 }
 
 // Callback for geolocation
 function showPosition(position) {
-  element.textContent = `Latitude: ${position.coords.latitude} 
-  Longitude: ${position.coords.longitude}`;
   fetchLocation(position.coords);
 }
 
@@ -30,34 +33,63 @@ async function fetchLocation(coords) {
   displayLocation(user);
 }
 
+// Output weather forecast to UI
 function displayLocation(user) {
   const h1 = document.querySelector(".name-country");
   const pTemp = document.querySelector(".temp");
   const temp = kelvinToCelcius(user.main.temp);
+  const pHumidity = document.querySelector(".humidity");
+  const pFeelsLike = document.querySelector(".feels-like");
   const pDescription = document.querySelector(".description");
+  const currentTemp = document.querySelector(".current-temp");
+  const lowTemp = document.querySelector(".low-temp");
+  const highTemp = document.querySelector(".high-temp");
+  const tomorrowTemp = document.querySelector(".tomorrow-temp");
 
   h1.textContent = `${user.name}, ${user.sys.country}`;
   updateDate();
   pTemp.textContent = `${temp}°C`;
-  pDescription.textContent = user.weather[0].description;
+  pHumidity.textContent = `Humidity: ${user.main.humidity}%`;
+  pFeelsLike.textContent = `Feels Like: ${kelvinToCelcius(
+    user.main.feels_like
+  )}°C`;
+  pDescription.textContent = `Description: ${user.weather[0].description}`;
+  currentTemp.textContent = `${temp}°C`;
+  lowTemp.textContent = `${kelvinToCelcius(user.main.temp_min)}°C`;
+  highTemp.textContent = `${kelvinToCelcius(user.main.temp_max)}°C`;
+  tomorrowTemp.textContent = `${temp}°C`;
 }
 
-function getDate() {
-  return new Date();
+// Convert Kelvin to Celcius
+function kelvinToCelcius(temp) {
+  return Math.ceil(temp - 273.15);
 }
 
+// Update date and output to UI
 function updateDate() {
   const pDate = document.querySelector(".date");
-  pDate.textContent = getDate();
+  const date = extractDate(getDate());
+  pDate.textContent = `${date.dayOfTheWeek} ${date.month} ${date.day} ${date.year} ${date.time}`;
 
   // Call this function again in 1000ms
   setTimeout(updateDate, 1000);
 }
 
-function kelvinToCelcius(temp) {
-  return Math.ceil(temp - 273.15);
+// Get date
+function getDate() {
+  return new Date();
 }
 
-const element = document.createElement("div");
+// Parses date
+function extractDate(date) {
+  const dateArr = date.toString().split(" ");
+  return {
+    dayOfTheWeek: dateArr[0],
+    month: dateArr[1],
+    day: dateArr[2],
+    year: dateArr[3],
+    time: dateArr[4],
+  };
+}
+
 getLocation();
-document.body.append(element);
